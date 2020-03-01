@@ -1,0 +1,440 @@
+//Пользователь вводит число. Определить количество цифр в этом числе, посчитать их сумму и
+//среднее арифметическое. Определить количество нулей в этом числе. Общение с пользователем
+//организовать через меню.
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int number = 0, sum = 0, quantity = 0, zero = 0;
+    double average = 0;
+    bool exit = false;
+    cout << "Insert the number: " << endl;
+    cin >> number;
+    int tempNumber;
+    tempNumber = number;
+    while (tempNumber > 0)
+    {
+        tempNumber = tempNumber / 10;
+        quantity++;
+    }
+    tempNumber = number;
+    while (tempNumber > 0)
+    {
+        sum = sum + tempNumber%10;
+        tempNumber = tempNumber/10;
+    }
+    average = (double)sum / quantity;
+    tempNumber = number;
+    while (tempNumber > 0)
+    {
+        if(tempNumber%10 == 0)
+        {
+            zero++;
+        }
+        tempNumber = tempNumber/10;
+    }
+    int menu;
+    while (!exit)
+    {
+        cout << "Using the following commands you can output: " << endl;
+        cout << "1 - Number of digits in this number." << endl;
+        cout << "2 - The sum of all numbers in this number." << endl;
+        cout << "3 - Arithmetic mean of the sum of all digits in this number." << endl;
+        cout << "4 - Number of zeros in this number." << endl;
+        cout << "0 - Exit." << endl;
+        cin >> menu;
+        switch (menu)
+        {
+            case 1:
+                cout << "Number of digits = " << quantity << endl;
+                system("Pause");
+                break;
+            case 2:
+                cout << "The sum of the digits = " << sum << endl << endl;
+                system("Pause");
+                break;
+            case 3:
+                cout << "Average = " << average << endl << endl;
+                system("Pause");
+                break;
+            case 4:
+                cout << "Number of zeros = " << zero << endl << endl;
+                system("Pause");
+                break;
+            case 0:
+                cout << "Exit." << endl;
+                exit = true;
+                break;
+            default:
+                cout << "Unknown command" << endl << endl;
+                system("Pause");
+        }
+    }
+}
+
+
+//Написать программу, которая выводит на экран шахматную доску с заданным размером
+//клеточки. Например,
+//***---***---***---***---
+//***---***---***---***---
+//***---***---***---***---
+//---***---***---***---***
+//---***---***---***---***
+//---***---***---***---***
+
+#include <iostream>
+
+using namespace std;
+void Black_White_table()
+{
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            cout << "***---";
+        }
+        cout << endl;
+    }
+}
+
+void  White_Black_table()
+{
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            cout << "---***";
+        }
+        cout << endl;
+    }
+}
+int main()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        Black_White_table();
+        White_Black_table();
+    }
+}
+
+
+
+//Написать программу, которая выводит на экран линию заданным символом, вертикальную или
+//горизонтальную, причем линия может выводиться быстро, нормально и медленно. Общение с
+//пользователем организовать через меню.
+
+#include <iostream>
+#include <windows.h>
+
+using namespace std;
+
+int main()
+{
+char line, speedMenu;
+bool exit = false;
+int speed;
+while (!exit)
+{
+    cout << "Enter output speed: " << endl;
+    cout << "f - fast" << endl;
+    cout << "m - medium" << endl;
+    cout << "s - small" << endl;
+    cin >> speedMenu;
+    if (speedMenu == 'f') {
+        speed = 100;
+        exit = true;
+    } else if (speedMenu == 'm') {
+        speed = 1000;
+        exit = true;
+    } else if (speedMenu == 's') {
+        speed = 2000;
+        exit = true;
+    } else {
+        cout << "Incorrect" << endl;
+    }
+}
+cout << endl << endl;
+exit = false;
+while (!exit)
+{
+    cout << "Enter output direction: " << endl;
+    cout << "h - horizontally" << endl;
+    cout << "u - upright" << endl;
+    cin >> line;
+    switch (line)
+    {
+        case 'h':
+            for (int i = 0; i < 10; i++)
+            {
+                Sleep(speed);
+                cout << "*";
+            }
+            exit = true;
+            break;
+        case 'u':
+            for (int i = 0; i < 10; i++)
+            {
+                Sleep(speed);
+                cout << "*" << endl;
+            }
+            exit = true;
+            break;
+        default:
+            cout << "Incorrect" << endl;
+    }
+}
+}
+
+//Написать игру «Кубики». Пользователь и компьютер по очереди бросают 2 кубика. Победитель
+// тот, у кого по результатам 3х бросков сумма больше. Предусмотреть красивый интерфейс
+//игры
+
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <windows.h>
+
+using namespace std;
+const int SIZE_CUBE = 3;
+char table[SIZE_CUBE][SIZE_CUBE];
+void Cube()
+{
+    for (int i = 0; i < SIZE_CUBE; i++)
+    {
+        for (int j = 0; j < SIZE_CUBE; j++)
+        {
+            table[i][j] = ' ';
+        }
+    }
+}
+void ShowCube1()
+{
+    Cube();
+    table[1][1] = 'o';
+    cout << " ---------" << endl;
+    for (int i = 0; i < SIZE_CUBE; i++)
+    {
+        cout << "|";
+        for (int j = 0; j < SIZE_CUBE; j++)
+        {
+            cout << " " << table[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+    cout << " ---------" << endl;
+}
+void ShowCube2()
+{
+    Cube();
+    table[0][1] = 'o';
+    table[2][1] = 'o';
+    cout << " ---------" << endl;
+    for (int i = 0; i < SIZE_CUBE; i++)
+    {
+        cout << "|";
+        for (int j = 0; j < SIZE_CUBE; j++)
+        {
+            cout << " " << table[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+    cout << " ---------" << endl;
+}
+void ShowCube3()
+{
+    Cube();
+    table[0][1] = 'o';
+    table[1][1] = 'o';
+    table[2][1] = 'o';
+    cout << " ---------" << endl;
+    for (int i = 0; i < SIZE_CUBE; i++)
+    {
+        cout << "|";
+        for (int j = 0; j < SIZE_CUBE; j++)
+        {
+            cout << " " << table[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+    cout << " ---------" << endl;
+}
+void ShowCube4()
+{
+    Cube();
+    table[0][0] = 'o';
+    table[0][2] = 'o';
+    table[2][0] = 'o';
+    table[2][2] = 'o';
+    cout << " ---------" << endl;
+    for (int i = 0; i < SIZE_CUBE; i++)
+    {
+        cout << "|";
+        for (int j = 0; j < SIZE_CUBE; j++)
+        {
+            cout << " " << table[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+    cout << " ---------" << endl;
+}
+void ShowCube5()
+{
+    Cube();
+    table[0][0] = 'o';
+    table[0][2] = 'o';
+    table[2][0] = 'o';
+    table[2][2] = 'o';
+    table[1][1] = 'o';
+    cout << " ---------" << endl;
+    for (int i = 0; i < SIZE_CUBE; i++)
+    {
+        cout << "|";
+        for (int j = 0; j < SIZE_CUBE; j++)
+        {
+            cout << " " << table[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+    cout << " ---------" << endl;
+}
+void ShowCube6()
+{
+    Cube();
+    table[0][0] = 'o';
+    table[0][2] = 'o';
+    table[2][0] = 'o';
+    table[2][2] = 'o';
+    table[0][1] = 'o';
+    table[2][1] = 'o';
+    cout << " ---------" << endl;
+    for (int i = 0; i < SIZE_CUBE; i++)
+    {
+        cout << "|";
+        for (int j = 0; j < SIZE_CUBE; j++)
+        {
+            cout << " " << table[i][j] << " ";
+        }
+        cout << "|" << endl;
+    }
+    cout << " ---------" << endl;
+}
+
+int main()
+{
+    srand(time(0));
+    int meter = 0;
+    int cube, sum1 = 0, sum2 = 0;
+    bool game =true, p1 = true, p2 = true;
+    cout << "Rules of the game:" << endl;
+    cout << "You roll 2 cubes in turn with the computer," << endl;
+    cout << "who will score more points after 3 throws, he won!" << endl;
+    cout << "Ready?" << endl << endl;
+    system("pause");
+
+    while(game)
+    {
+        if (meter > 0)
+        {
+            cout << "You score: " << sum1 << endl;
+            cout << "Computer score " << sum2 << endl << endl;
+        }
+        cout << meter+1 << " throw!" << endl << endl;
+        system("pause");
+        while (p1)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                cube = rand()%6 + 1;
+                if (cube == 1)
+                {
+                    ShowCube1();
+                }
+                if (cube == 2)
+                {
+                    ShowCube2();
+                }
+                if (cube == 3)
+                {
+                    ShowCube3();
+                }
+                if (cube == 4)
+                {
+                    ShowCube4();
+                }
+                if (cube == 5)
+                {
+                    ShowCube5();
+                }
+                if (cube == 6)
+                {
+                    ShowCube6();
+                }
+                sum1 = sum1 + cube;
+                Sleep(3000);
+            }
+            cout << "You score: " << sum1 << endl << endl;
+            cout << "step computer" << endl;
+            system("pause");
+            p1=false;
+            p2=true;
+        }
+        while(p2)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                cube = rand()%6 + 1;
+                if (cube == 1)
+                {
+                    ShowCube1();
+                }
+                if (cube == 2)
+                {
+                    ShowCube2();
+                }
+                if (cube == 3)
+                {
+                    ShowCube3();
+                }
+                if (cube == 4)
+                {
+                    ShowCube4();
+                }
+                if (cube == 5)
+                {
+                    ShowCube5();
+                }
+                if (cube == 6)
+                {
+                    ShowCube6();
+                }
+                sum2 = sum2 + cube;
+                Sleep(3000);
+            }
+            cout << endl;
+            p2=false;
+            p1=true;
+        }
+        meter++;
+        if(meter == 3)
+        {
+            game = false;
+        }
+        cout << endl << endl;
+    }
+    cout << "You score: " << sum1 << endl;
+    cout << "Computer score " << sum2 << endl;
+    if (sum1 > sum2)
+    {
+        cout << "You win!";
+    }
+    else if (sum2 > sum1)
+    {
+        cout << "Computer win!";
+    } else {
+        cout << "Draw!";
+    }
+}
+
